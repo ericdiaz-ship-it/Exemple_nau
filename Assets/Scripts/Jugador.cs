@@ -38,13 +38,20 @@ public class Jugador : MonoBehaviour
             vel * direccio.y * Time.deltaTime,
             vel * direccio.z * Time.deltaTime);
         transform.position += nouDesplacament;
-        
+
     }
     void ControlLimitsPantalla()
     {
         Vector3 novapos = transform.position;
-        novapos.x = (float)Math.Clamp(novapos.x, limitInferiorEsquerra.x+ 1, limitSuperiorDret.x-1);
-        novapos.y = (float)Math.Clamp(novapos.y, limitInferiorEsquerra.y+0.7, limitSuperiorDret.y-0.7);
+        novapos.x = (float)Math.Clamp(novapos.x, limitInferiorEsquerra.x + 1, limitSuperiorDret.x - 1);
+        novapos.y = (float)Math.Clamp(novapos.y, limitInferiorEsquerra.y + 0.7, limitSuperiorDret.y - 0.7);
         transform.position = novapos;
+    }
+    private void OnTriggerEnter(Collider objecteTocat)
+    {
+        if (objecteTocat.tag == "Enemic")
+        {
+            Destroy(gameObject);
+        }
     }
 }
