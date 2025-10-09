@@ -1,17 +1,22 @@
 using System;
 using UnityEngine;
-
+using TMPro;
+using UnityEngine.UI;
 public class Jugador : MonoBehaviour
 {
     public GameObject jugador;
     public float vel = 10f;//en c# se suele poner el tipo de valor al final
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+                           // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private int numEscuts = 3;
+    [HeaderAttribute("UI")]
+    public TextMeshProUGUI textEscuts;
     private Camera camera;
     private Vector3 limitInferiorEsquerra;
     private Vector3 limitSuperiorDret;
     void Start()
     {
         camera = Camera.main;
+        textEscuts.text = "Escuts: " + numEscuts.ToString() ;
         float distanciaZCamaraNau = Mathf.Abs(transform.position.z - camera.transform.position.z);
 
         limitInferiorEsquerra = camera.ViewportToWorldPoint(new Vector3(0, 0, distanciaZCamaraNau));
@@ -51,7 +56,24 @@ public class Jugador : MonoBehaviour
     {
         if (objecteTocat.tag == "Enemic")
         {
-            Destroy(gameObject);
+
+            if (numEscuts < 0)
+            {
+                Destroy(gameObject);
+            }
+            numEscuts--;
         }
+    }
+    public void IncrementarEscuts(int EscutsPerIncrementar)
+    {
+        numEscuts += EscutsPerIncrementar;
+    }
+    public void ReducirEscuts(int EscutsPerReduir)
+    {
+        numEscuts -= EscutsPerReduir;
+    }
+    public void ActualitzarText()
+    {
+        
     }
 }
